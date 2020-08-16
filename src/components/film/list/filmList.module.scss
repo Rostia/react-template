@@ -10,3 +10,22 @@
   display: flex;
   justify-content: space-between;
 }
+
+.contentContainer {
+  padding: 1em;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $color-black;
+
+  & > :nth-child(n) {
+    margin-right: 1em;
+  }
+
+  .noResult {
+    color: $color-white;
+    padding: 4em;
+    margin: 0 auto;
+    font-size: 3em;
+  }
+}
+

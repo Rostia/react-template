@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './button.module.scss';
 
@@ -10,12 +11,11 @@ const Button = ({
 }) => (
   <button
     type="button"
-    className={`
-        ${styles.btn} 
-        ${mode === 'default' && styles.default}
-        ${mode === 'active' && styles.active}
-        ${className}
-      `}
+    className={cn(styles.btn, className, {
+      [styles.default]: mode === 'default',
+      [styles.active]: mode === 'active',
+      [styles.outline]: mode === 'outline',
+    })}
     {...otherProps}
   >
     {children}
@@ -28,7 +28,7 @@ Button.propTypes = {
     PropTypes.object,
     PropTypes.func,
   ]).isRequired,
-  mode: PropTypes.oneOf(['default', 'active']),
+  mode: PropTypes.oneOf(['default', 'active', 'outline']),
   className: PropTypes.string,
 };
 

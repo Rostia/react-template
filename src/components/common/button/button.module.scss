@@ -1,8 +1,9 @@
 @import "src/common/setting.scss";
 
 .btn {
+  box-sizing: border-box;
   display: inline-block;
-  padding: 0 1em;
+  padding: 0.1rem 1em;
 
   background: none;
   outline: none;
@@ -35,5 +36,17 @@
 
   &:hover {
     background: $color-red-o-50;
+  }
+}
+
+.outline {
+  padding: 0 1em;
+  background: none;
+  border: 0.1rem solid $color-red;
+  color: $color-red;
+
+  &:hover {
+    background-color: $color-red;
+    color: $color-white;
   }
 }

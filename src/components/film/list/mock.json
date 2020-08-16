@@ -1,0 +1,44 @@
+[
+    {
+      "id": "5f3956372f9d330f4f38e8d9",
+      "name": "Joker",
+      "year": "2019",
+      "ganre": "Dramma"
+    },
+    {
+      "id": "5f3956375aa1722a5e06020f",
+      "name": "Matrica",
+      "year": "1999",
+      "ganre": "Action"
+    },
+    {
+      "id": "5f395637ba6b681e91c8ca7a",
+      "name": "Avatar",
+      "year": "2009",
+      "ganre": "Action"
+    },
+    {
+      "id": "5f395637871f969d4d850362",
+      "name": "Kill Bill",
+      "year": "1994",
+      "ganre": "Oscar"
+    },
+    {
+      "id": "5f395637f0c483bd3edc458b",
+      "name": "Inception",
+      "year": "2003",
+      "ganre": "Action"
+    },
+    {
+      "id": "5f395637ae59724af142016d",
+      "name": "Avengers",
+      "year": "2003",
+      "ganre": "Adventure"
+    },
+    {
+      "id": "5f395637d4ae92c00205bb31",
+      "name": "Pulp Fiction",
+      "year": "2004",
+      "ganre": "Oscar"
+    }
+  ]
