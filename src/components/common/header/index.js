@@ -2,6 +2,7 @@ import React, { useState, createContext, useRef } from 'react';
 import Button from 'components/common/button';
 import Logotype from 'components/common/logotype';
 import AddMovie from 'components/common/form/addMovie';
+import bg from './bg.jpg';
 import styles from './header.module.scss';
 
 export const SearchContext = createContext({ search: '', setSearch: () => { } });
@@ -19,7 +20,6 @@ export const SearchProvider = ({ children }) => {
 const Header = () => {
   const [open, setOpen] = useState(false);
   const inputSearch = useRef(undefined);
-
   return (
     <section className={styles.headerComponent}>
       <header className={styles.headerContainer}>

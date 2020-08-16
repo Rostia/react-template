@@ -10,7 +10,7 @@ const FilmCard = ({
   },
 }) => (
   <section className={styles.cardWrapper}>
-    <img src="https://picsum.photos/200/300" alt="Film" className={styles.cardImage} />
+    <img src="https://picsum.photos/400/300" alt="Film" className={styles.cardImage} />
     <div className={styles.row}>
       <h3 className={styles.cardTitle}>{name}</h3>
       <span className={styles.cardYear}>{year}</span>

@@ -2,8 +2,7 @@
 
 .cardWrapper {
     position: relative;
-    max-width: 30%;
-    flex-basis: 30%;
+    flex: 0 1 350px;
 
     &:hover {
         .actionButton {

@@ -7,7 +7,9 @@
   padding-top: 1em;
 
   height: 25rem;
-  background: #393938;
+  background: url('bg.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
 
   .headerContainer {
     display: flex;
