@@ -1,0 +1,52 @@
+@import "src/common/setting.scss";
+
+.btn {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0.1rem 1em;
+
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: 0.3rem;
+  font-size: 1.5em;
+  line-height: 2em;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  cursor: pointer;
+}
+
+.default {
+  transition: color linear 300ms, background linear 300ms;
+  background: $color-gray-o-50;
+  color: $color-red;
+
+  &:hover {
+    background: $color-red;
+    color: $color-white; 
+  }
+}
+
+.active {
+  transition: background linear 300ms;
+
+  background: $color-red;
+  color: $color-white;
+
+  &:hover {
+    background: $color-red-o-50;
+  }
+}
+
+.outline {
+  padding: 0 1em;
+  background: none;
+  border: 0.1rem solid $color-red;
+  color: $color-red;
+
+  &:hover {
+    background-color: $color-red;
+    color: $color-white;
+  }
+}
