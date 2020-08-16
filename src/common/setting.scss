@@ -1,0 +1,18 @@
+$max-width-template: 1000px;
+$min-padding: 0 1em;
+$max-padding: 0 2em;
+
+$bp-sm: 568px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1344;
+
+$color-white: #fff;
+$color-black: #232323;
+$color-red: #f65261;
+$color-secondary: #424242;
+$color-gray: #555;
+
+$color-gray-o-50: fade-out($color-gray, .50);
+$color-red-o-50: fade-out($color-red, .50);
+$color-black-o-50: fade-out($color-black, .50);

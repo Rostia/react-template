@@ -1,0 +1,47 @@
+@import "src/common/setting.scss";
+
+.filmSortContainer {
+  display: flex;
+
+  .sortWrapper {
+    position: relative;
+  }
+
+  .title {
+    color: $color-white;
+    font-size: 1.2rem;
+    margin-right: 0.3rem;
+  }
+
+  .active {
+    color: $color-white;
+    font-size: 1rem;
+    font-weight: bold;
+    line-height: 1.4rem;
+    cursor: pointer;
+  }
+
+  .list {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    transform: translateY(100%);
+    border-radius: 0.3rem;
+
+    z-index: 2;
+    background-color: $color-white;
+    list-style: none;
+  }
+
+  .listItem {
+    white-space: nowrap;
+    padding: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $color-gray;
+    }
+  }
+}

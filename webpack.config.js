@@ -31,10 +31,16 @@ module.exports = {
   entry: './src/index.js',
   mode: 'defvelopment',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '/dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
-
+  resolve: {
+    modules: [
+      path.resolve(path.join(__dirname, '/src')),
+      path.resolve(path.join(__dirname, '/node_modules')),
+    ],
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: 'React template',
@@ -70,10 +76,33 @@ module.exports = {
               reloadAll: true,
             },
           },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+          'postcss-loader',
+          'sass-loader',
+        ],
+        include: /\.module\.css$/,
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: isDev,
+              reloadAll: true,
+            },
+          },
           'css-loader',
           'postcss-loader',
           'sass-loader',
         ],
+        exclude: /\.module\.css$/,
       },
       {
         test: /\.(png|svg|jpg|gif)$/,

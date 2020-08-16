@@ -1,0 +1,47 @@
+@import "src/common/setting.scss";
+
+.headerComponent {
+  display: flex;
+  flex-direction: column;
+  padding: $min-padding;
+  padding-top: 1em;
+
+  height: 25rem;
+  background: #393938;
+
+  .headerContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2em;
+  }
+
+  .contentContainer {
+    margin-left: 15%;
+  }
+
+  .header {
+    color: $color-white;
+
+    text-transform: uppercase;
+  }
+
+  .searchContainer {
+    display: flex;
+  }
+
+  .searchInput {
+    width: 100%;
+    max-width: 35rem;
+    padding: 0 1em;
+    outline: none;
+    background: $color-black-o-50;
+    color: $color-white;
+    border: none;
+
+    margin-right: 1em;
+  }
+
+  .row {
+    display: flex;
+  }
+}

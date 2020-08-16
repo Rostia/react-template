@@ -1,0 +1,12 @@
+@import "src/common/setting.scss";
+
+.filmListContainer {
+  padding: 1em;
+  flex: 1 1 auto;
+  background: $color-black;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
