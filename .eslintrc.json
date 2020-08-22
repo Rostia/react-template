@@ -20,6 +20,8 @@
         "react"
     ],
     "rules": {
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "import/no-unresolved": "off",
+        "jsx-a11y/label-has-associated-control": "off"
     }
 }
