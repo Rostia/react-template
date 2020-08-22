@@ -1,8 +1,8 @@
 import React, { useState, createContext, useRef } from 'react';
+import PropTypes from 'prop-types';
 import Button from 'components/common/button';
 import Logotype from 'components/common/logotype';
-import AddMovie from 'components/common/form/addMovie';
-import bg from './bg.jpg';
+import FormMovie from 'components/common/form/movie';
 import styles from './header.module.scss';
 
 export const SearchContext = createContext({ search: '', setSearch: () => { } });
@@ -17,7 +17,7 @@ export const SearchProvider = ({ children }) => {
   );
 };
 
-const Header = () => {
+const Header = ({ addFilm }) => {
   const [open, setOpen] = useState(false);
   const inputSearch = useRef(undefined);
   return (
@@ -25,7 +25,7 @@ const Header = () => {
       <header className={styles.headerContainer}>
         <Logotype />
         <Button type="button" onClick={() => setOpen(true)}>+ Add movie</Button>
-        {open && <AddMovie setOpen={setOpen} />}
+        {open && <FormMovie setOpen={setOpen} onSubmit={addFilm} />}
       </header>
       <div className={styles.contentContainer}>
         <h1 className={styles.header}>Find Your Movie</h1>
@@ -59,6 +59,22 @@ const Header = () => {
       </div>
     </section>
   );
+};
+
+Header.propTypes = {
+  addFilm: PropTypes.func,
+};
+
+Header.defaultProps = {
+  addFilm: () => { },
+};
+
+SearchProvider.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
 };
 
 export default Header;

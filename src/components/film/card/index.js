@@ -1,34 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FilmControl from 'components/film/control';
 import styles from './FilmCard.module.scss';
 
 const FilmCard = ({
-  film: {
+  film,
+  deleteFilm,
+  editMovie,
+}) => {
+  const {
     name,
-    year,
     ganre,
-  },
-}) => (
-  <section className={styles.cardWrapper}>
-    <img src="https://picsum.photos/400/300" alt="Film" className={styles.cardImage} />
-    <div className={styles.row}>
-      <h3 className={styles.cardTitle}>{name}</h3>
-      <span className={styles.cardYear}>{year}</span>
-    </div>
-    <p className={styles.cardGanre}>{ganre}</p>
-
-    <button type="button" className={styles.actionButton}>
-      <span className={styles.dotes}>...</span>
-    </button>
-  </section>
-);
+    releaseDate,
+  } = film;
+  return (
+    <section className={styles.cardWrapper}>
+      <img src="https://picsum.photos/400/300" alt="Film" className={styles.cardImage} />
+      <div className={styles.row}>
+        <h3 className={styles.cardTitle}>{name}</h3>
+        <span className={styles.cardYear}>{releaseDate}</span>
+      </div>
+      {ganre.map((item) => <span className={styles.cardGanre} key={item}>{item}</span>)}
+      <FilmControl deleteMovie={deleteFilm} editMovie={editMovie} movie={film} />
+    </section>
+  );
+};
 
 FilmCard.propTypes = {
   film: PropTypes.shape({
     name: PropTypes.string,
-    year: PropTypes.string,
-    ganre: PropTypes.string,
+    releaseDate: PropTypes.string,
+    ganre: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
+  deleteFilm: PropTypes.func.isRequired,
+  editMovie: PropTypes.func.isRequired,
 };
 
 export default FilmCard;
