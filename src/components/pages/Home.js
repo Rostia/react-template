@@ -1,61 +1,34 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Header from 'components/common/header/index';
 import Footer from 'components/common/footer';
 import FilmList from 'components/film/list';
 import mockFilms from 'components/film/list/mock.json';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      films: [],
-    };
+const Home = () => {
+  const [films, setFilms] = useState([]);
 
-    this.addFilm = this.addFilm.bind(this);
-    this.deleteFilm = this.deleteFilm.bind(this);
-    this.editMovie = this.editMovie.bind(this);
-  }
+  useEffect(() => {
+    setFilms(mockFilms);
+  }, []);
 
-  componentDidMount() {
-    this.setState({
-      films: mockFilms,
-    });
-  }
+  const addFilm = useCallback((film) => setFilms([...films, film]), [films]);
 
-  addFilm(film) {
-    const { films } = this.state;
+  const deleteFilm = useCallback(
+    (id) => setFilms(films.filter(({ id: filmId }) => filmId !== id)),
+    [films],
+  );
 
-    this.setState({
-      films: [...films, film],
-    });
-  }
+  const editMovie = useCallback((newMovie) => {
+    setFilms([...films.filter(({ id }) => newMovie.id !== id), newMovie]);
+  }, [films]);
 
-  deleteFilm(id) {
-    const { films } = this.state;
+  return (
+    <main>
+      <Header addFilm={addFilm} />
+      <FilmList data={films} deleteFilm={deleteFilm} editMovie={editMovie} />
+      <Footer />
+    </main>
+  );
+};
 
-    this.setState({
-      films: films.filter(({ id: filmId }) => filmId !== id),
-    });
-  }
-
-  editMovie(newMovie) {
-    const { films } = this.state;
-
-    this.setState({
-      films: [...films.filter(({ id }) => newMovie.id !== id), newMovie],
-    });
-  }
-
-  render() {
-    const { films } = this.state;
-
-    return (
-      <main>
-        <Header addFilm={this.addFilm} />
-        <FilmList data={films} deleteFilm={this.deleteFilm} editMovie={this.editMovie} />
-        <Footer />
-      </main>
-    );
-  }
-}
 export default Home;

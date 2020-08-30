@@ -1,8 +1,11 @@
 @import "src/common/setting.scss";
 
 .cardWrapper {
+    display: block;
     position: relative;
     flex: 0 1 350px;
+    text-decoration: none;
+    margin-bottom: 1rem;
 
     &:hover {
         .actionButton {

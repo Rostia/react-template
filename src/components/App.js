@@ -2,14 +2,14 @@ import React, { PureComponent } from 'react';
 import 'normalize.css';
 import './App.scss';
 import { SearchProvider } from 'components/common/header';
-import Home from './pages/Home';
+import Pages from 'components/pages';
 
 class App extends PureComponent {
   render() {
     return (
       <div>
         <SearchProvider>
-          <Home />
+          <Pages />
         </SearchProvider>
       </div>
     );
