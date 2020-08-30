@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Button from 'components/common/button';
@@ -20,34 +20,24 @@ function getGanre(list) {
   return list.map((category) => ({ value: category, label: category }));
 }
 
-class FormMovie extends Component {
-  constructor(props) {
-    super(props);
-    this.state = this.getMovie();
+const FormMovie = ({
+  onSubmit, setOpen, isEdit, movie,
+}) => {
+  const getMovie = () => (isEdit ? { ...movie, ganre: getGanre(movie.ganre) } : DEFAULT_STATE);
+  const [film, setFilm] = useState(getMovie());
 
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onChange = this.onChange.bind(this);
-    this.onChangeSelect = this.onChangeSelect.bind(this);
-    this.onReset = this.onReset.bind(this);
-  }
+  const onChange = ({ target: { name, value } }) => {
+    setFilm({ ...film, [name]: value });
+  };
 
-  onChange({ target: { name, value } }) {
-    this.setState({
-      [name]: value,
-    });
-  }
+  const onChangeSelect = (selected) => {
+    setFilm({ ...film, ganre: selected });
+  };
 
-  onChangeSelect(selected) {
-    this.setState({
-      ganre: selected,
-    });
-  }
-
-  onSubmit(event) {
-    const { onSubmit, setOpen, isEdit } = this.props;
-    const { ganre } = this.state;
+  const onSubmitHandler = (event) => {
+    const { ganre } = film;
     const resultMovie = {
-      ...this.state,
+      ...film,
       ganre: ganre.map(({ value }) => value),
     };
 
@@ -56,128 +46,108 @@ class FormMovie extends Component {
     }
 
     onSubmit(resultMovie);
-    this.setState(DEFAULT_STATE);
+    setFilm(DEFAULT_STATE);
     setOpen(false);
     event.preventDefault();
-  }
+  };
 
-  onReset() {
-    this.setState(DEFAULT_STATE);
-  }
+  const onReset = () => setFilm(DEFAULT_STATE);
 
-  getMovie() {
-    const { isEdit, movie } = this.props;
+  const options = categories.map((category) => ({ value: category, label: category }));
 
-    return isEdit ? { ...movie, ganre: getGanre(movie.ganre) } : DEFAULT_STATE;
-  }
-
-  render() {
-    const { setOpen } = this.props;
-    const {
-      name,
-      ganre,
-      releaseDate,
-      movieUrl,
-      overview,
-      runtime,
-    } = this.state;
-
-    const options = categories.map((category) => ({ value: category, label: category }));
-
-    return (
-      <section className={styles.componentContainer}>
-        <div className={styles.modal}>
-          <form onSubmit={this.onSubmit}>
-            <h2 className={styles.heading}>Add movie</h2>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="title">Title</label>
-              <input
-                className={styles.input}
-                type="text"
-                id="title"
-                name="name"
-                onChange={this.onChange}
-                value={name}
-              />
-            </div>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="releaseDate">Release Date</label>
-              <input
-                type="date"
-                className={styles.input}
-                id="releaseDate"
-                name="releaseDate"
-                onChange={this.onChange}
-                value={releaseDate}
-              />
-            </div>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="movieUrl">Movie Url</label>
-              <input
-                type="text"
-                className={styles.input}
-                id="movieUrl"
-                name="movieUrl"
-                onChange={this.onChange}
-                value={movieUrl}
-              />
-            </div>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="genre">Genre</label>
-              <Select
-                id="genre"
-                name="genre"
-                options={options}
-                onChange={this.onChangeSelect}
-                isMulti
-                value={ganre}
-              />
-            </div>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="overview">Overview</label>
-              <input
-                type="text"
-                className={styles.input}
-                id="overview"
-                name="overview"
-                onChange={this.onChange}
-                value={overview}
-              />
-            </div>
-            <div className={styles.formControll}>
-              <label className={styles.label} htmlFor="runtime">Runtime</label>
-              <input
-                type="text"
-                className={styles.input}
-                id="runtime"
-                name="runtime"
-                value={runtime}
-                onChange={this.onChange}
-              />
-            </div>
-            <div className={styles.btnGroup}>
-              <Button
-                type="button"
-                mode="outline"
-                className={styles.btn}
-                onClick={this.onReset}
-              >
-                Reset
-              </Button>
-              <Button
-                type="submit"
-                mode="active"
-              >
-                Add
-              </Button>
-            </div>
-          </form>
-          <button className={styles.close} type="button" onClick={() => setOpen(false)}>&times;</button>
-        </div>
-      </section>
-    );
-  }
-}
+  return (
+    <section className={styles.componentContainer}>
+      <div className={styles.modal}>
+        <form onSubmit={onSubmitHandler}>
+          <h2 className={styles.heading}>Add movie</h2>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="title">Title</label>
+            <input
+              className={styles.input}
+              type="text"
+              id="title"
+              name="name"
+              onChange={onChange}
+              value={film.name}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="releaseDate">Release Date</label>
+            <input
+              type="date"
+              className={styles.input}
+              id="releaseDate"
+              name="releaseDate"
+              onChange={onChange}
+              value={film.releaseDate}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="movieUrl">Movie Url</label>
+            <input
+              type="text"
+              className={styles.input}
+              id="movieUrl"
+              name="movieUrl"
+              onChange={onChange}
+              value={film.movieUrl}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="genre">Genre</label>
+            <Select
+              id="genre"
+              name="genre"
+              options={options}
+              onChange={onChangeSelect}
+              isMulti
+              value={film.ganre}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="overview">Overview</label>
+            <input
+              type="text"
+              className={styles.input}
+              id="overview"
+              name="overview"
+              onChange={onChange}
+              value={film.overview}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="runtime">Runtime</label>
+            <input
+              type="text"
+              className={styles.input}
+              id="runtime"
+              name="runtime"
+              value={film.runtime}
+              onChange={onChange}
+            />
+          </div>
+          <div className={styles.btnGroup}>
+            <Button
+              type="button"
+              mode="outline"
+              className={styles.btn}
+              onClick={onReset}
+            >
+              Reset
+            </Button>
+            <Button
+              type="submit"
+              mode="active"
+            >
+              Add
+            </Button>
+          </div>
+        </form>
+        <button className={styles.close} type="button" onClick={() => setOpen(false)}>&times;</button>
+      </div>
+    </section>
+  );
+};
 
 FormMovie.propTypes = {
   setOpen: PropTypes.func.isRequired,
