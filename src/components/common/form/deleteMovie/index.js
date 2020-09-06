@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { deleteMovie } from 'actions/movies';
 import cn from 'classnames';
 import PropTypes from 'prop-types';
 import Button from 'components/common/button';
@@ -7,7 +9,7 @@ import componentStyles from './DeleteMovie.module.scss';
 
 const DeleteMovie = ({
   setOpen,
-  deleteMovie,
+  actionDeleteMovie,
   movieId,
 }) => (
   <section className={styles.componentContainer}>
@@ -17,9 +19,9 @@ const DeleteMovie = ({
       <Button
         type="button"
         mode="active"
-        onClick={() => {
-          deleteMovie(movieId);
-          setOpen(false);
+        onClick={(event) => {
+          actionDeleteMovie(movieId);
+          setOpen(event, false);
         }}
         className={componentStyles.btn}
       >
@@ -32,8 +34,12 @@ const DeleteMovie = ({
 
 DeleteMovie.propTypes = {
   setOpen: PropTypes.func.isRequired,
-  deleteMovie: PropTypes.func.isRequired,
+  actionDeleteMovie: PropTypes.func.isRequired,
   movieId: PropTypes.string.isRequired,
 };
 
-export default DeleteMovie;
+const mapDispatchToProps = (dispatch) => ({
+  actionDeleteMovie: (id) => dispatch(deleteMovie(id)),
+});
+
+export default connect(undefined, mapDispatchToProps)(DeleteMovie);

@@ -1,34 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Footer from 'components/common/footer';
 import FilmList from 'components/film/list';
-import mockFilms from 'components/film/list/mock.json';
+import { URL_API, MOVIES } from 'constants/api';
 import FilmDetail from 'components/film/detail';
 
 const Film = ({
   id,
 }) => {
-  const [films, setFilms] = useState([]);
   const [film, setFilm] = useState(undefined);
 
   useEffect(() => {
-    setFilms(mockFilms);
-  }, []);
-
-  useEffect(() => {
-    mockFilms.forEach((item) => item.id === id && setFilm(item));
+    axios.get(`${URL_API}${MOVIES}/${id}`)
+      .then(({ data }) => setFilm(data));
   }, [id]);
-
-  const deleteFilm = (key) => setFilms(films.filter(({ id: filmId }) => filmId !== key));
-
-  const editMovie = (newMovie) => {
-    setFilms([...films.filter(({ id: filmId }) => newMovie.id !== filmId), newMovie]);
-  };
 
   return (
     <main>
       {film && <FilmDetail film={film} />}
-      <FilmList data={films} deleteFilm={deleteFilm} editMovie={editMovie} />
+      <FilmList />
       <Footer />
     </main>
   );

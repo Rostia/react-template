@@ -1,0 +1,9 @@
+export const FETCH_MOVIES = 'FETCH_MOVIES';
+export const ADD_MOVIE = 'ADD_MOVIE';
+export const DELETE_MOVIE = 'DELETE_MOVIE';
+export const UPDATE_MOVIE = 'UPDATE_MOVIE';
+export const GET_MOVIE = 'GET_MOVIE';
+export const SORTING_RELEASE_DATE = 'SORTING_RELEASE_DATE';
+export const SORTING_RATING = 'SORTING_RATING';
+export const GET_ALL_GANRE = 'GET_ALL_GANRE';
+export const SET_ACTIVE_GANRE = 'SET_ACTIVE_GANRE';
