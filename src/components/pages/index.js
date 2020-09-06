@@ -9,7 +9,7 @@ const Pages = () => {
   const parsed = queryString.parse(search);
 
   useEffect(() => {
-    setPage(parsed.page);
+    setPage(parsed.page ? parsed.page : 'home');
   }, [parsed.page]);
 
   return (

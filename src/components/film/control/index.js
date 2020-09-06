@@ -6,7 +6,7 @@ import DeleteMovie from 'components/common/form/deleteMovie';
 import FormMovie from 'components/common/form/movie';
 import styles from './FilmControl.module.scss';
 
-const FilmControl = ({ deleteMovie, movie, editMovie }) => {
+const FilmControl = ({ movie }) => {
   const [open, setOpen] = useState(false);
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setopenEditForm] = useState(false);
@@ -56,7 +56,6 @@ const FilmControl = ({ deleteMovie, movie, editMovie }) => {
                 openDeleteForm && (
                   <DeleteMovie
                     setOpen={(event) => stopPreventDefault(event, () => setOpenDeleteForm(false))}
-                    deleteMovie={deleteMovie}
                     movieId={movie.id}
                   />
                 )
@@ -66,7 +65,6 @@ const FilmControl = ({ deleteMovie, movie, editMovie }) => {
                   <FormMovie
                     setOpen={(event) => stopPreventDefault(event, () => setopenEditForm(false))}
                     isEdit
-                    onSubmit={editMovie}
                     movie={movie}
                   />
                 )
@@ -79,11 +77,9 @@ const FilmControl = ({ deleteMovie, movie, editMovie }) => {
 };
 
 FilmControl.propTypes = {
-  deleteMovie: PropTypes.func.isRequired,
-  editMovie: PropTypes.func.isRequired,
   movie: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
     ganre: PropTypes.arrayOf(PropTypes.string),
     release_date: PropTypes.string,
     movie_url: PropTypes.string,

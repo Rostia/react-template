@@ -1,29 +1,48 @@
 import React from 'react';
-import cn from 'classnames';
+import { connect } from 'react-redux';
+import { sortingByReleaseDate, sortingByRating } from 'actions/sorting';
+import {
+  SORTING_RELEASE_DATE,
+} from 'constants/ActionTypes';
 import PropTypes from 'prop-types';
 import styles from './FilmSort.module.scss';
 
 const FilmSort = ({
-  sort,
-  setSort,
+  sorting,
+  actionSortingByReleaseDate,
+  actionSortingByRating,
 }) => (
   <div className={styles.filmSortContainer}>
     <span className={styles.title}>Sort: </span>
     <button
-      className={cn(styles.sortBtn, {
-        [styles.active]: sort,
-      })}
+      className={styles.sortBtn}
       type="button"
-      onClick={() => setSort(!sort)}
+      onClick={() => {
+        if (sorting === SORTING_RELEASE_DATE) {
+          actionSortingByRating();
+        } else {
+          actionSortingByReleaseDate();
+        }
+      }}
     >
-      Release date
+      {sorting === SORTING_RELEASE_DATE ? 'Release date' : 'Rating'}
     </button>
   </div>
 );
 
 FilmSort.propTypes = {
-  sort: PropTypes.bool.isRequired,
-  setSort: PropTypes.func.isRequired,
+  sorting: PropTypes.string.isRequired,
+  actionSortingByReleaseDate: PropTypes.func.isRequired,
+  actionSortingByRating: PropTypes.func.isRequired,
 };
 
-export default FilmSort;
+const mapStateToProps = ({ sorting }) => ({
+  sorting,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actionSortingByReleaseDate: () => dispatch(sortingByReleaseDate()),
+  actionSortingByRating: () => dispatch(sortingByRating()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmSort);

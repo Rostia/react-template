@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { addMovie, updateMovie } from 'actions/movies';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Button from 'components/common/button';
 import categories from 'components/film/categories.json';
-import uniqid from 'uniqid';
 import styles from 'components/common/form/comonForm.module.scss';
 
 const DEFAULT_STATE = {
-  id: '',
-  name: '',
-  ganre: [],
-  releaseDate: '',
-  movieUrl: '',
+  title: '',
+  tagline: '',
+  vote_average: 0,
+  vote_count: 0,
+  genres: [],
+  release_date: '',
+  poster_path: '',
   overview: '',
-  runtime: '',
+  budget: 0,
+  revenue: 0,
+  runtime: 0,
 };
 
 function getGanre(list) {
@@ -21,9 +26,13 @@ function getGanre(list) {
 }
 
 const FormMovie = ({
-  onSubmit, setOpen, isEdit, movie,
+  setOpen,
+  isEdit,
+  movie,
+  actionAddMovie,
+  actionUpdateMovie,
 }) => {
-  const getMovie = () => (isEdit ? { ...movie, ganre: getGanre(movie.ganre) } : DEFAULT_STATE);
+  const getMovie = () => (isEdit ? { ...movie, genres: getGanre(movie.genres) } : DEFAULT_STATE);
   const [film, setFilm] = useState(getMovie());
 
   const onChange = ({ target: { name, value } }) => {
@@ -31,24 +40,27 @@ const FormMovie = ({
   };
 
   const onChangeSelect = (selected) => {
-    setFilm({ ...film, ganre: selected });
+    setFilm({ ...film, genres: selected });
   };
 
   const onSubmitHandler = (event) => {
-    const { ganre } = film;
+    const { genres } = film;
     const resultMovie = {
+      ...DEFAULT_STATE,
       ...film,
-      ganre: ganre.map(({ value }) => value),
+      runtime: +film.runtime,
+      genres: genres.map(({ value }) => value),
     };
 
     if (!isEdit) {
-      resultMovie.id = uniqid();
+      delete resultMovie.id;
+      actionAddMovie(resultMovie);
+    } else {
+      actionUpdateMovie(resultMovie);
     }
 
-    onSubmit(resultMovie);
     setFilm(DEFAULT_STATE);
-    setOpen(false);
-    event.preventDefault();
+    setOpen(event, false);
   };
 
   const onReset = () => setFilm(DEFAULT_STATE);
@@ -66,31 +78,42 @@ const FormMovie = ({
               className={styles.input}
               type="text"
               id="title"
-              name="name"
+              name="title"
               onChange={onChange}
-              value={film.name}
+              value={film.title}
             />
           </div>
           <div className={styles.formControll}>
-            <label className={styles.label} htmlFor="releaseDate">Release Date</label>
+            <label className={styles.label} htmlFor="title">Tagline</label>
+            <input
+              className={styles.input}
+              type="text"
+              id="tagline"
+              name="tagline"
+              onChange={onChange}
+              value={film.tagline}
+            />
+          </div>
+          <div className={styles.formControll}>
+            <label className={styles.label} htmlFor="release_date">Release Date</label>
             <input
               type="date"
               className={styles.input}
-              id="releaseDate"
-              name="releaseDate"
+              id="release_date"
+              name="release_date"
               onChange={onChange}
-              value={film.releaseDate}
+              value={film.release_date}
             />
           </div>
           <div className={styles.formControll}>
-            <label className={styles.label} htmlFor="movieUrl">Movie Url</label>
+            <label className={styles.label} htmlFor="poster_path">Movie Url</label>
             <input
               type="text"
               className={styles.input}
-              id="movieUrl"
-              name="movieUrl"
+              id="poster_path"
+              name="poster_path"
               onChange={onChange}
-              value={film.movieUrl}
+              value={film.poster_path}
             />
           </div>
           <div className={styles.formControll}>
@@ -101,7 +124,7 @@ const FormMovie = ({
               options={options}
               onChange={onChangeSelect}
               isMulti
-              value={film.ganre}
+              value={film.genres}
             />
           </div>
           <div className={styles.formControll}>
@@ -139,11 +162,11 @@ const FormMovie = ({
               type="submit"
               mode="active"
             >
-              Add
+              {isEdit ? 'Update' : 'Add'}
             </Button>
           </div>
         </form>
-        <button className={styles.close} type="button" onClick={() => setOpen(false)}>&times;</button>
+        <button className={styles.close} type="button" onClick={(event) => setOpen(event, false)}>&times;</button>
       </div>
     </section>
   );
@@ -151,12 +174,13 @@ const FormMovie = ({
 
 FormMovie.propTypes = {
   setOpen: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
+  actionAddMovie: PropTypes.func.isRequired,
+  actionUpdateMovie: PropTypes.func.isRequired,
   isEdit: PropTypes.bool,
   movie: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    ganre: PropTypes.arrayOf(PropTypes.string),
+    genres: PropTypes.arrayOf(PropTypes.string),
     release_date: PropTypes.string,
     movie_url: PropTypes.string,
     overview: PropTypes.string,
@@ -169,4 +193,9 @@ FormMovie.defaultProps = {
   movie: undefined,
 };
 
-export default FormMovie;
+const mapDispatchToProps = (dispatch) => ({
+  actionAddMovie: (data) => dispatch(addMovie(data)),
+  actionUpdateMovie: (data) => dispatch(updateMovie(data)),
+});
+
+export default connect(undefined, mapDispatchToProps)(FormMovie);

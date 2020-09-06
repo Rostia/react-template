@@ -5,37 +5,35 @@ import styles from './FilmCard.module.scss';
 
 const FilmCard = ({
   film,
-  deleteFilm,
-  editMovie,
 }) => {
   const {
     id,
-    name,
-    ganre,
-    releaseDate,
+    title,
+    genres,
+    release_date: releaseDate,
+    poster_path: posterPath,
   } = film;
   return (
     <a href={`?page=film&id=${id}`} className={styles.cardWrapper}>
-      <img src="https://picsum.photos/400/300" alt="Film" className={styles.cardImage} />
+      <img src={posterPath} alt="Film" className={styles.cardImage} />
       <div className={styles.row}>
-        <h3 className={styles.cardTitle}>{name}</h3>
+        <h3 className={styles.cardTitle}>{title}</h3>
         <span className={styles.cardYear}>{releaseDate}</span>
       </div>
-      {ganre.map((item) => <span className={styles.cardGanre} key={item}>{item}</span>)}
-      <FilmControl deleteMovie={deleteFilm} editMovie={editMovie} movie={film} />
+      <span className={styles.cardGanre}>{genres.join(', ')}</span>
+      <FilmControl movie={film} />
     </a>
   );
 };
 
 FilmCard.propTypes = {
   film: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    releaseDate: PropTypes.string,
-    ganre: PropTypes.arrayOf(PropTypes.string),
+    id: PropTypes.number,
+    title: PropTypes.string,
+    release_date: PropTypes.string,
+    genres: PropTypes.arrayOf(PropTypes.string),
+    poster_path: PropTypes.string,
   }).isRequired,
-  deleteFilm: PropTypes.func.isRequired,
-  editMovie: PropTypes.func.isRequired,
 };
 
 export default FilmCard;
