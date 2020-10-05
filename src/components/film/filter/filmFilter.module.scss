@@ -1,0 +1,33 @@
+@import "src/common/setting.scss";
+
+.filmFilterContainer {
+  display: flex;
+  margin: 0;
+  list-style: none;
+
+  .filterItem {
+    padding: 0 0 1em;
+    margin-right: 1em;
+    position: relative;
+  }
+
+  .link {
+    cursor: pointer;
+    color: $color-white;
+    font-size: 1.2rem;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    &.active {
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 0.15rem;
+        background-color: $color-red;
+      }
+    }
+  }
+}

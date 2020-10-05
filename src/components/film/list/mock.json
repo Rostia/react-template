@@ -1,0 +1,56 @@
+[
+    {
+      "id": "5f3956372f9d330f4f38e8d9",
+      "name": "Joker",
+      "ganre": ["Dramma"],
+      "releaseDate": "2020",
+      "movieUrl": "joker",
+      "overview": "some text",
+      "runtime": 120
+    },
+    {
+      "id": "5f3956375aa1722a5e06020f",
+      "name": "Matrica",
+      "ganre": ["Action"],
+      "releaseDate": "2013",
+      "movieUrl": "matrica",
+      "overview": "some text",
+      "runtime": 130
+    },
+    {
+      "id": "5f395637ba6b681e91c8ca7a",
+      "name": "Avatar",
+      "ganre": ["Action"],
+      "releaseDate": "1995",
+      "movieUrl": "avatar",
+      "overview": "some text",
+      "runtime": 130
+    },
+    {
+      "id": "5f395637871f969d4d850362",
+      "name": "Kill Bill",
+      "ganre": ["Oscar"],
+      "releaseDate": "2000",
+      "movieUrl": "kill-bill",
+      "overview": "some text",
+      "runtime": 140
+    },
+    {
+      "id": "5f395637f0c483bd3edc458b",
+      "name": "Inception",
+      "ganre": ["Action"],
+      "releaseDate": "1990",
+      "movieUrl": "kill-bill",
+      "overview": "some text",
+      "runtime": 140
+    },
+    {
+      "id": "5f395637ae59724af142016d",
+      "name": "Avengers",
+      "ganre": ["Adventure"],
+      "releaseDate": "2003",
+      "movieUrl": "kill-bill",
+      "overview": "some text",
+      "runtime": 140
+    }
+  ]

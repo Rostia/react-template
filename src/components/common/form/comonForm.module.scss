@@ -1,0 +1,81 @@
+@import "src/common/setting.scss";
+
+.componentContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: fade-out($color-black, .20);
+}
+
+.heading {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: $color-white;
+}
+
+.modal {
+    position: relative;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    border-radius: 0.1em;
+    background-color: $color-black;
+}
+
+.label {
+    font-size: 1.5rem;
+    color: $color-red;
+}
+
+.input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1em;
+    outline: none;
+    background: $color-gray;
+    color: $color-white;
+    border: none;
+
+    margin-right: 1em;
+}
+
+.formControll {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+
+.btnGroup {
+    margin-left: auto;
+
+    & > * {
+        margin-right: 0.5em;
+        flex-shrink: 0;
+    }
+}
+
+.close {
+    border: none;
+    background: none;
+    outline: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    color: $color-white;
+    cursor: pointer;
+}
+
+.text {
+    color: $color-white;
+    margin-bottom: 1.4em;
+    font-size: 1.5em;
+}

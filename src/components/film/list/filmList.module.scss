@@ -1,0 +1,31 @@
+@import "src/common/setting.scss";
+
+.filmListContainer {
+  padding: 1em;
+  flex: 1 1 auto;
+  background: $color-black;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentContainer {
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background-color: $color-black;
+
+  & > :nth-child(n) {
+    margin-right: 1em;
+  }
+
+  .noResult {
+    color: $color-white;
+    padding: 4em;
+    margin: 0 auto;
+    font-size: 3em;
+  }
+}

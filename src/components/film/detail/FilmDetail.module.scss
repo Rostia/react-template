@@ -1,0 +1,62 @@
+@import "src/common/setting.scss";
+
+.componentContainer {
+    padding: 2.5em;
+    background-color: $color-black;
+
+    .filmContainer {
+        display: flex;
+    }
+
+    .headerContainer {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .title,
+    .ganre,
+    .description {
+        color: $color-white;
+    }
+
+    .year,
+    .time {
+        color: $color-red;
+        font-size: 1.6rem;
+        margin-right: 1rem;
+    }
+
+    .img {
+        max-width: 250px;
+        margin-right: 2rem;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .rating {
+        font-size: 1.5rem;
+        padding: 1rem;
+        border-radius: 50%;
+        color: green;
+        border: 0.1rem solid $color-white;
+    }
+
+    .title {
+        margin-right: 1rem;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    .center {
+        align-items: center;
+    }
+
+    .loupe {
+        max-width: 1.5rem;
+        height: 1.5rem;
+        fill: $color-red;
+    }
+}
