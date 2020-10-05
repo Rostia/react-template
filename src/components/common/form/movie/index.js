@@ -188,7 +188,7 @@ const FormMovie = ({
             </Button>
           </div>
         </form>
-        <button className={styles.close} type="button" onClick={(event) => setOpen(event, false)}>&times;</button>
+        <button className={styles.close} type="button" onClick={() => setOpen(false)}>&times;</button>
       </div>
     </section>
   );
