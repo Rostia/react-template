@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 import Footer from 'components/common/footer';
 import FilmList from 'components/film/list';
 import { URL_API, MOVIES } from 'constants/api';
 import FilmDetail from 'components/film/detail';
 
-const Film = ({
-  id,
-}) => {
+const Film = () => {
+  const { id } = useParams();
   const [film, setFilm] = useState(undefined);
 
   useEffect(() => {
@@ -23,10 +22,6 @@ const Film = ({
       <Footer />
     </main>
   );
-};
-
-Film.propTypes = {
-  id: PropTypes.string.isRequired,
 };
 
 export default Film;

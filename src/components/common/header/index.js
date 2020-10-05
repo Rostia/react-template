@@ -1,25 +1,18 @@
-import React, { useState, createContext, useRef } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'components/common/button';
 import Logotype from 'components/common/logotype';
 import FormMovie from 'components/common/form/movie';
+import { useHistory } from 'react-router';
 import styles from './header.module.scss';
-
-export const SearchContext = createContext({ search: '', setSearch: () => { } });
-
-export const SearchProvider = ({ children }) => {
-  const [search, setSearch] = useState('');
-
-  return (
-    <SearchContext.Provider value={{ search, setSearch }}>
-      {children}
-    </SearchContext.Provider>
-  );
-};
 
 const Header = ({ addFilm }) => {
   const [open, setOpen] = useState(false);
-  const inputSearch = useRef(undefined);
+  const [search, setSearch] = useState('');
+  const history = useHistory();
+
+  const goToSearchPage = (str) => history.push(`/search/${str}`);
+
   return (
     <section className={styles.headerComponent}>
       <header className={styles.headerContainer}>
@@ -30,31 +23,24 @@ const Header = ({ addFilm }) => {
       <div className={styles.contentContainer}>
         <h1 className={styles.header}>Find Your Movie</h1>
         <div className={styles.searchContainer}>
-          <SearchContext.Consumer>
-            {
-              ({ setSearch }) => (
-                <>
-                  <input
-                    type="text"
-                    className={styles.searchInput}
-                    onKeyUp={(event) => {
-                      if (event.key === 'Enter') {
-                        setSearch(event.target.value);
-                      }
-                    }}
-                    ref={inputSearch}
-                  />
-                  <Button
-                    type="button"
-                    mode="active"
-                    onClick={() => setSearch(inputSearch.current.value)}
-                  >
-                    Search
-                  </Button>
-                </>
-              )
-            }
-          </SearchContext.Consumer>
+          <input
+            type="text"
+            className={styles.searchInput}
+            onKeyUp={(event) => {
+              if (event.key === 'Enter') {
+                goToSearchPage(search);
+              }
+            }}
+            onChange={(({ target }) => setSearch(target?.value))}
+            value={search}
+          />
+          <Button
+            type="button"
+            mode="active"
+            onClick={() => goToSearchPage(search)}
+          >
+            Search
+          </Button>
         </div>
       </div>
     </section>
@@ -67,14 +53,6 @@ Header.propTypes = {
 
 Header.defaultProps = {
   addFilm: () => { },
-};
-
-SearchProvider.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.node,
-    PropTypes.object,
-    PropTypes.func,
-  ]).isRequired,
 };
 
 export default Header;

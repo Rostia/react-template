@@ -121,5 +121,6 @@ module.exports = {
     port: 8080,
     watchContentBase: true,
     progress: true,
+    historyApiFallback: true,
   },
 };

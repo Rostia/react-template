@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import queryString from 'query-string';
+import React from 'react';
 import HomePage from 'components/pages/Home';
 import FilmPage from 'components/pages/Film';
+import SearchPage from 'components/pages/Search';
+import NotFoundPage from 'components/pages/NotFound';
 
-const Pages = () => {
-  const [page, setPage] = useState('home');
-  const { search } = document.location;
-  const parsed = queryString.parse(search);
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom';
 
-  useEffect(() => {
-    setPage(parsed.page ? parsed.page : 'home');
-  }, [parsed.page]);
+const Pages = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/">
+        <HomePage />
+      </Route>
+      <Route exact path="/film/:id">
+        <FilmPage />
+      </Route>
+      <Route exact path="/search/:search">
+        <SearchPage />
+      </Route>
+      <Route path="*">
+        <NotFoundPage />
+      </Route>
+    </Switch>
+  </Router>
 
-  return (
-    <>
-      {page === 'home' && <HomePage />}
-      {page === 'film' && <FilmPage id={parsed?.id} />}
-    </>
-  );
-};
+);
 
 export default Pages;
