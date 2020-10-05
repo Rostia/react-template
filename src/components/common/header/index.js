@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Button from 'components/common/button';
 import Logotype from 'components/common/logotype';
 import FormMovie from 'components/common/form/movie';
-import { useHistory } from "react-router";
+import { useHistory } from 'react-router';
 import styles from './header.module.scss';
 
 const Header = ({ addFilm }) => {
