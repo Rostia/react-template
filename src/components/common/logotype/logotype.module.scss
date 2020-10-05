@@ -1,7 +1,8 @@
 @import "src/common/setting.scss";
  
 .logotype {
+  margin: 5px;
   font-size: 1.5em;
-
+  text-decoration: none;
   color: $color-red;
 }

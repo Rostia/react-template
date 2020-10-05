@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import 'normalize.css';
 import './App.scss';
-import { SearchProvider } from 'components/common/header';
 import Pages from 'components/pages';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -15,9 +14,7 @@ class App extends PureComponent {
     return (
       <Provider store={store}>
         <div>
-          <SearchProvider>
-            <Pages />
-          </SearchProvider>
+          <Pages />
         </div>
       </Provider>
     );

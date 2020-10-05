@@ -7,7 +7,6 @@ import FilmFilter from 'components/film/filter';
 import FilmSort from 'components/film/sort';
 import FilmCard from 'components/film/card';
 import ResultCount from 'components/film/result-count';
-import { SearchContext } from 'components/common/header';
 import styles from './filmList.module.scss';
 
 const FilmList = ({
@@ -15,6 +14,7 @@ const FilmList = ({
   actionFetchMovies,
   sorting,
   activeGanre,
+  search,
 }) => {
   useEffect(() => {
     const options = {
@@ -25,40 +25,35 @@ const FilmList = ({
       options.filter = [activeGanre];
     }
 
+    if (search) {
+      options.search = search;
+      options.searchBy = 'title';
+    }
+
     actionFetchMovies(options);
-  }, [actionFetchMovies, sorting, activeGanre]);
+  }, [search, actionFetchMovies, sorting, activeGanre]);
 
+  const filmsCount = movies.data.length;
   return (
-    <SearchContext.Consumer>
-      {
-        ({ search }) => {
-          const filmsCount = movies.data.length;
-
-          return (
-            <section className={styles.filmListContainer}>
-              <header className={styles.headerContainer}>
-                <FilmFilter />
-                <FilmSort />
-              </header>
-              <ResultCount count={filmsCount} />
-              <main className={styles.contentContainer}>
-                {
-                  filmsCount > 0
-                    ? movies.data.map((film) => (
-                      <FilmCard
-                        film={film}
-                        key={film.id}
-                      />
-                    ))
-                    : <p className={styles.noResult}>No Movie Found</p>
-                }
-              </main>
-            </section>
-
-          );
+    <section className={styles.filmListContainer}>
+      <header className={styles.headerContainer}>
+        <FilmFilter />
+        <FilmSort />
+      </header>
+      <ResultCount count={filmsCount} />
+      <main className={styles.contentContainer}>
+        {
+          filmsCount > 0
+            ? movies.data.map((film) => (
+              <FilmCard
+                film={film}
+                key={film.id}
+              />
+            ))
+            : <p className={styles.noResult}>No Movie Found</p>
         }
-      }
-    </SearchContext.Consumer>
+      </main>
+    </section>
   );
 };
 
@@ -67,10 +62,12 @@ FilmList.propTypes = {
   actionFetchMovies: PropTypes.func.isRequired,
   sorting: PropTypes.string.isRequired,
   activeGanre: PropTypes.string,
+  search: PropTypes.string,
 };
 
 FilmList.defaultProps = {
   activeGanre: undefined,
+  search: '',
 };
 
 const mapStateToProps = ({ movies, sorting, ganre }) => ({
