@@ -14,15 +14,18 @@ const FilmCard = ({
     poster_path: posterPath,
   } = film;
   return (
-    <a href={`?page=film&id=${id}`} className={styles.cardWrapper}>
-      <img src={posterPath} alt="Film" className={styles.cardImage} />
-      <div className={styles.row}>
-        <h3 className={styles.cardTitle}>{title}</h3>
-        <span className={styles.cardYear}>{releaseDate}</span>
-      </div>
-      <span className={styles.cardGanre}>{genres.join(', ')}</span>
+    <div className={styles.cardContained}>
+      <a href={`?page=film&id=${id}`} className={styles.card}>
+        <img src={posterPath} alt="Film" className={styles.cardImage} />
+        <div className={styles.row}>
+          <h3 className={styles.cardTitle}>{title}</h3>
+          <span className={styles.cardYear}>{releaseDate}</span>
+        </div>
+        <span className={styles.cardGanre}>{genres.join(', ')}</span>
+      </a>
       <FilmControl movie={film} />
-    </a>
+    </div>
+
   );
 };
 

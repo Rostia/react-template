@@ -1,17 +1,20 @@
 @import "src/common/setting.scss";
 
-.cardWrapper {
-    display: block;
+.cardContained {
     position: relative;
+    display: block;
     flex: 0 1 350px;
-    text-decoration: none;
-    margin-bottom: 1rem;
 
     &:hover {
         .actionButton {
             display: inline-flex;
         }
     }
+}
+
+.card {
+    text-decoration: none;
+    margin-bottom: 1rem;
 
     .cardImage {
         width: 100%;
