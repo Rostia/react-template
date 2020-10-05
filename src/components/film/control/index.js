@@ -11,11 +11,6 @@ const FilmControl = ({ movie }) => {
   const [openDeleteForm, setOpenDeleteForm] = useState(false);
   const [openEditForm, setopenEditForm] = useState(false);
 
-  const stopPreventDefault = (event, callBack) => {
-    event.preventDefault();
-    callBack();
-  };
-
   return (
     <>
       {
@@ -24,7 +19,7 @@ const FilmControl = ({ movie }) => {
             <button
               type="button"
               className={cn(styles.actionButton, cardStyles.actionButton)}
-              onClick={(event) => stopPreventDefault(event, () => setOpen(!open))}
+              onClick={() => setOpen(!open)}
             >
               <span className={styles.dotes}>...</span>
             </button>
@@ -34,28 +29,28 @@ const FilmControl = ({ movie }) => {
               <button
                 type="button"
                 className={styles.btn}
-                onClick={(event) => stopPreventDefault(event, () => setopenEditForm(true))}
+                onClick={() => setopenEditForm(true)}
               >
                 Edit
               </button>
               <button
                 type="button"
                 className={styles.btn}
-                onClick={(event) => stopPreventDefault(event, () => setOpenDeleteForm(true))}
+                onClick={() => setOpenDeleteForm(true)}
               >
                 Delete
               </button>
               <button
                 type="button"
                 className={styles.close}
-                onClick={(event) => stopPreventDefault(event, () => setOpen(!open))}
+                onClick={() => setOpen(!open)}
               >
                 &times;
               </button>
               {
                 openDeleteForm && (
                   <DeleteMovie
-                    setOpen={(event) => stopPreventDefault(event, () => setOpenDeleteForm(false))}
+                    setOpen={() => setOpenDeleteForm(false)}
                     movieId={movie.id}
                   />
                 )
@@ -63,7 +58,7 @@ const FilmControl = ({ movie }) => {
               {
                 openEditForm && (
                   <FormMovie
-                    setOpen={(event) => stopPreventDefault(event, () => setopenEditForm(false))}
+                    setOpen={() => setopenEditForm(false)}
                     isEdit
                     movie={movie}
                   />

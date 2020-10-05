@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { addMovie, updateMovie } from 'actions/movies';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import Button from 'components/common/button';
 import categories from 'components/film/categories.json';
+import { useFormik } from 'formik';
 import styles from 'components/common/form/comonForm.module.scss';
+
+const schema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  tagline: Yup.string('Tagline should be string'),
+  vote_average: Yup.number('Vote average should be number'),
+  vote_count: Yup.number('Vote count should be number'),
+  genres: Yup.array(Yup.object()).required('Genre is required'),
+  release_date: Yup.date('Release date should be date'),
+  poster_path: Yup.string().url('Movie Url should be URL').required('Movie Url is required'),
+  overview: Yup.string().required('Overview is required'),
+  budget: Yup.number('Budget should be number'),
+  revenue: Yup.number('Revenue should be number'),
+  runtime: Yup.number('Runtime should be number').required('Runtime is required'),
+});
 
 const DEFAULT_STATE = {
   title: '',
@@ -33,45 +49,47 @@ const FormMovie = ({
   actionUpdateMovie,
 }) => {
   const getMovie = () => (isEdit ? { ...movie, genres: getGanre(movie.genres) } : DEFAULT_STATE);
-  const [film, setFilm] = useState(getMovie());
+  const initialFormik = getMovie();
 
-  const onChange = ({ target: { name, value } }) => {
-    setFilm({ ...film, [name]: value });
-  };
+  const formik = useFormik({
+    initialValues: {
+      ...initialFormik,
+    },
+    onSubmit: (values) => {
+      const resultMovie = {
+        ...DEFAULT_STATE,
+        ...values,
+        runtime: +values.runtime,
+        genres: values.genres.map(({ value }) => value),
+      };
 
-  const onChangeSelect = (selected) => {
-    setFilm({ ...film, genres: selected });
-  };
+      if (!isEdit) {
+        delete resultMovie.id;
+        actionAddMovie(resultMovie);
+      } else {
+        actionUpdateMovie(resultMovie);
+      }
 
-  const onSubmitHandler = (event) => {
-    const { genres } = film;
-    const resultMovie = {
-      ...DEFAULT_STATE,
-      ...film,
-      runtime: +film.runtime,
-      genres: genres.map(({ value }) => value),
-    };
+      formik.handleReset();
+      setOpen(false);
+    },
+    validationSchema: schema,
+  });
 
-    if (!isEdit) {
-      delete resultMovie.id;
-      actionAddMovie(resultMovie);
-    } else {
-      actionUpdateMovie(resultMovie);
-    }
-
-    setFilm(DEFAULT_STATE);
-    setOpen(event, false);
-  };
-
-  const onReset = () => setFilm(DEFAULT_STATE);
+  const onReset = () => formik.handleReset();
 
   const options = categories.map((category) => ({ value: category, label: category }));
+
+  const { errors } = formik;
 
   return (
     <section className={styles.componentContainer}>
       <div className={styles.modal}>
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={formik.handleSubmit}>
           <h2 className={styles.heading}>Add movie</h2>
+          <ul className={styles.errorList}>
+            {Object.values(errors)?.map((error) => <li key={error}>{error}</li>)}
+          </ul>
           <div className={styles.formControll}>
             <label className={styles.label} htmlFor="title">Title</label>
             <input
@@ -79,8 +97,8 @@ const FormMovie = ({
               type="text"
               id="title"
               name="title"
-              onChange={onChange}
-              value={film.title}
+              onChange={formik.handleChange}
+              value={formik.values.title}
             />
           </div>
           <div className={styles.formControll}>
@@ -90,8 +108,8 @@ const FormMovie = ({
               type="text"
               id="tagline"
               name="tagline"
-              onChange={onChange}
-              value={film.tagline}
+              onChange={formik.handleChange}
+              value={formik.values.tagline}
             />
           </div>
           <div className={styles.formControll}>
@@ -101,8 +119,8 @@ const FormMovie = ({
               className={styles.input}
               id="release_date"
               name="release_date"
-              onChange={onChange}
-              value={film.release_date}
+              onChange={formik.handleChange}
+              value={formik.values.release_date}
             />
           </div>
           <div className={styles.formControll}>
@@ -112,8 +130,8 @@ const FormMovie = ({
               className={styles.input}
               id="poster_path"
               name="poster_path"
-              onChange={onChange}
-              value={film.poster_path}
+              onChange={formik.handleChange}
+              value={formik.values.poster_path}
             />
           </div>
           <div className={styles.formControll}>
@@ -122,9 +140,13 @@ const FormMovie = ({
               id="genre"
               name="genre"
               options={options}
-              onChange={onChangeSelect}
               isMulti
-              value={film.genres}
+              // value={film.genres}
+              // onChange={onChangeSelect}
+              onChange={(selected) => {
+                formik.setFieldValue('genres', selected);
+              }}
+              value={formik.values.genres}
             />
           </div>
           <div className={styles.formControll}>
@@ -134,8 +156,8 @@ const FormMovie = ({
               className={styles.input}
               id="overview"
               name="overview"
-              onChange={onChange}
-              value={film.overview}
+              onChange={formik.handleChange}
+              value={formik.values.overview}
             />
           </div>
           <div className={styles.formControll}>
@@ -145,8 +167,8 @@ const FormMovie = ({
               className={styles.input}
               id="runtime"
               name="runtime"
-              value={film.runtime}
-              onChange={onChange}
+              onChange={formik.handleChange}
+              value={formik.values.runtime}
             />
           </div>
           <div className={styles.btnGroup}>
@@ -166,7 +188,7 @@ const FormMovie = ({
             </Button>
           </div>
         </form>
-        <button className={styles.close} type="button" onClick={(event) => setOpen(event, false)}>&times;</button>
+        <button className={styles.close} type="button" onClick={() => setOpen(false)}>&times;</button>
       </div>
     </section>
   );
