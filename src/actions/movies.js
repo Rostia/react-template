@@ -5,18 +5,15 @@ import {
   DELETE_MOVIE,
   UPDATE_MOVIE,
 } from 'constants/ActionTypes';
-import { URL_API, MOVIES } from 'constants/api';
+import { URL_API, MOVIES, DEFAULT_PARAMS_FOR_GET_MOVIES } from 'constants/api';
 
 export const fetchMovies = (options) => (dispatch) => {
   const searchParams = new URLSearchParams({
-    offset: 0,
-    limit: 20,
-    sortBy: 'id',
-    sortOrder: 'desc',
+    ...DEFAULT_PARAMS_FOR_GET_MOVIES,
     ...options,
   });
 
-  axios.get(`${URL_API}${MOVIES}?${searchParams.toString()}`)
+  return axios.get(`${URL_API}${MOVIES}?${searchParams.toString()}`)
     .then(({ data }) => dispatch({
       type: FETCH_MOVIES,
       payload: data,
@@ -24,7 +21,7 @@ export const fetchMovies = (options) => (dispatch) => {
 };
 
 export const addMovie = (movie) => (dispatch) => {
-  axios.post(`${URL_API}${MOVIES}`, movie)
+  return axios.post(`${URL_API}${MOVIES}`, movie)
     .then(({ data }) => {
       dispatch({
         type: ADD_MOVIE,
@@ -34,7 +31,7 @@ export const addMovie = (movie) => (dispatch) => {
 };
 
 export const deleteMovie = (id) => (dispatch) => {
-  axios.delete(`${URL_API}${MOVIES}/${id}`)
+  return axios.delete(`${URL_API}${MOVIES}/${id}`)
     .then(() => {
       dispatch({
         type: DELETE_MOVIE,
@@ -44,7 +41,7 @@ export const deleteMovie = (id) => (dispatch) => {
 };
 
 export const updateMovie = (movie) => (dispatch) => {
-  axios.put(`${URL_API}${MOVIES}`, movie)
+  return axios.put(`${URL_API}${MOVIES}`, movie)
     .then(({ data }) => {
       dispatch({
         type: UPDATE_MOVIE,

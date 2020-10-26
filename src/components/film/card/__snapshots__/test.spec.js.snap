@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilmCard component should render FilmCard component 1`] = `
+<div
+  class="cardContained"
+>
+  <a
+    class="card"
+    href="/film/1"
+  >
+    <img
+      alt="Film"
+      class="cardImage"
+      src="https://image.tmdb.org/t/p/w500/432BowXw7a4fWXSONxBaFKqvW4f.jpg"
+    />
+    <div
+      class="row"
+    >
+      <h3
+        class="cardTitle"
+      >
+        Transformer
+      </h3>
+      <span
+        class="cardYear"
+      >
+        2019-06-26
+      </span>
+    </div>
+    <span
+      class="cardGanre"
+    >
+      Action, Adventure
+    </span>
+  </a>
+  <button
+    class="actionButton actionButton"
+    type="button"
+  >
+    <span
+      class="dotes"
+    >
+      ...
+    </span>
+  </button>
+</div>
+`;
