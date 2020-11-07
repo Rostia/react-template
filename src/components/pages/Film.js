@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useRouter } from 'next/router'
+import { connect } from 'react-redux';
 import Footer from 'components/common/footer';
 import FilmList from 'components/film/list';
-import { URL_API, MOVIES } from 'constants/api';
+import { fetchMovie } from 'actions/movies';
 import FilmDetail from 'components/film/detail';
 
-const Film = () => {
-  const { id } = useParams();
-  const [film, setFilm] = useState(undefined);
+const Film = ({
+  actionFetchMovie,
+  movies,
+}) => {
+  const router = useRouter();
+  const { id } = router.query;
+  const { currentFilm } = movies;
 
   useEffect(() => {
-    axios.get(`${URL_API}${MOVIES}/${id}`)
-      .then(({ data }) => setFilm(data));
+    actionFetchMovie(id);
   }, [id]);
 
   return (
     <main>
-      {film && <FilmDetail film={film} />}
+      {currentFilm && <FilmDetail film={currentFilm} />}
       <FilmList />
       <Footer />
     </main>
   );
 };
 
-export default Film;
+const mapStateToProps = ({ movies }) => ({
+  movies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actionFetchMovie: (id) => dispatch(fetchMovie(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

@@ -7,3 +7,4 @@ dist
 .npm/
 yarn.lock
 coverage
+.next

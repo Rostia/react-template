@@ -29,7 +29,6 @@ const FilmList = ({
       options.search = search;
       options.searchBy = 'title';
     }
-
     actionFetchMovies(options);
   }, [search, actionFetchMovies, sorting, activeGanre]);
 

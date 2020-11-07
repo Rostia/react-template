@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import styles from './logotype.module.scss';
 
 const Logotype = () => (
-  <Link to="/" className={styles.logotype}>Netflixroulet</Link>
+  <Link href="/" ><a className={styles.logotype}>Netflixroulet</a></Link>
 );
 
 export default Logotype;

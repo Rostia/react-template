@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   FETCH_MOVIES,
+  FETCH_MOVIE,
   ADD_MOVIE,
   DELETE_MOVIE,
   UPDATE_MOVIE,
@@ -16,6 +17,14 @@ export const fetchMovies = (options) => (dispatch) => {
   return axios.get(`${URL_API}${MOVIES}?${searchParams.toString()}`)
     .then(({ data }) => dispatch({
       type: FETCH_MOVIES,
+      payload: data,
+    }));
+};
+
+export const fetchMovie = (id) => (dispatch) => {
+  return axios.get(`${URL_API}${MOVIES}/${id}`)
+    .then(({ data }) => dispatch({
+      type: FETCH_MOVIE,
       payload: data,
     }));
 };
