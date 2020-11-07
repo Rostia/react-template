@@ -7,7 +7,11 @@ const Home = () => (
   <main>
     <Header />
     <FilmList />
-    <Footer />
+    <Footer
+      render={() => (
+        <p>TEST</p>
+      )}
+    />
   </main>
 );
 
