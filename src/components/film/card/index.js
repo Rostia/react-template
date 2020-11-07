@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import FilmControl from 'components/film/control';
 import styles from './FilmCard.module.scss';
@@ -16,13 +16,15 @@ const FilmCard = ({
   } = film;
   return (
     <div className={styles.cardContained}>
-      <Link to={`/film/${id}`} className={styles.card}>
-        <img src={posterPath} alt="Film" className={styles.cardImage} />
-        <div className={styles.row}>
-          <h3 className={styles.cardTitle}>{title}</h3>
-          <span className={styles.cardYear}>{releaseDate}</span>
-        </div>
-        <span className={styles.cardGanre}>{genres.join(', ')}</span>
+      <Link href={`/film/${id}`}>
+        <a className={styles.card}>
+          <img src={posterPath} alt="Film" className={styles.cardImage} />
+          <div className={styles.row}>
+            <h3 className={styles.cardTitle}>{title}</h3>
+            <span className={styles.cardYear}>{releaseDate}</span>
+          </div>
+          <span className={styles.cardGanre}>{genres.join(', ')}</span>
+        </a>
       </Link>
       <FilmControl movie={film} />
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import Logotype from 'components/common/logotype';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import Loupe from 'components/common/header/loupe';
 import styles from './FilmDetail.module.scss';
 
@@ -20,8 +20,10 @@ const FilmDetail = ({
   <div className={styles.componentContainer}>
     <header className={styles.headerContainer}>
       <Logotype />
-      <Link to="/">
-        <Loupe className={styles.loupe} />
+      <Link href="/">
+        <a>
+          <Loupe className={styles.loupe} />
+        </a>
       </Link>
     </header>
 
